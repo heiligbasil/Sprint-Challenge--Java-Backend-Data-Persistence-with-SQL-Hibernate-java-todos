@@ -3,6 +3,7 @@ package com.lambdaschool.javatodos.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "todos")
@@ -13,7 +14,11 @@ public class Todo extends Auditable
     private long todoid;
 
     @Column(nullable = false)
-    private String todo;
+    private String description;
+
+    private Timestamp datestarted;
+
+    private boolean completed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid",
@@ -25,9 +30,11 @@ public class Todo extends Auditable
     {
     }
 
-    public Todo(String todo, User user)
+    public Todo(String description, String datestarted, User user)
     {
-        this.todo = todo;
+        this.description = description;
+        this.datestarted = Timestamp.valueOf(datestarted);
+        this.completed = false;
         this.user = user;
     }
 
@@ -41,14 +48,34 @@ public class Todo extends Auditable
         this.todoid = todoid;
     }
 
-    public String getTodo()
+    public String getDescription()
     {
-        return todo;
+        return description;
     }
 
-    public void setTodo(String todo)
+    public void setDescription(String description)
     {
-        this.todo = todo;
+        this.description = description;
+    }
+
+    public Timestamp getDatestarted()
+    {
+        return datestarted;
+    }
+
+    public void setDatestarted(Timestamp datestarted)
+    {
+        this.datestarted = datestarted;
+    }
+
+    public boolean isCompleted()
+    {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed)
+    {
+        this.completed = completed;
     }
 
     public User getUser()

@@ -78,9 +78,9 @@ public class UserServiceImpl implements UserDetailsService, UserService
         }
         newUser.setUserRoles(newRoles);
 
-        for (Todo q : user.getTodos())
+        for (Todo t : user.getTodos())
         {
-            newUser.getTodos().add(new Todo(q.getTodo(), newUser));
+            newUser.getTodos().add(new Todo(t.getDescription(), t.getDatestarted().toString(), newUser));
         }
 
         return userrepos.save(newUser);
@@ -123,9 +123,9 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
                 if (user.getTodos().size() > 0)
                 {
-                    for (Todo q : user.getTodos())
+                    for (Todo t : user.getTodos())
                     {
-                        currentUser.getTodos().add(new Todo(q.getTodo(), currentUser));
+                        currentUser.getTodos().add(new Todo(t.getDescription(), t.getDatestarted().toString(), currentUser));
                     }
                 }
                 return userrepos.save(currentUser);

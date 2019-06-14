@@ -25,7 +25,7 @@ public class SeedData implements CommandLineRunner
     {
         this.rolerepos = rolerepos;
         this.userrepos = userrepos;
-        this.todorepos = todorepos
+        this.todorepos = todorepos;
     }
 
     @Override

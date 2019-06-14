@@ -18,7 +18,7 @@ Specifically
 
 ## Introduction
 
-This is a basic todo database scheme with users and a todo list.
+This is a basic description database scheme with users and a description list.
 
 ## Instructions
 
@@ -53,10 +53,10 @@ The table layouts are as follows:
 
 Expose the following end points
 
-* GET /users/mine - return the user and todo based off of the authenticated user. You can only look up your own.
+* GET /users/mine - return the user and description based off of the authenticated user. You can only look up your own.
 * POST /users - adds a user. Can only be done by an admin.
-* POST /users/todo/{userid} - adds a todo to the assigned user. Can be done by any user.
-* PUT /todos/todoid/{todoid} - updates a todo based on todoid. Can be done by any user.
+* POST /users/description/{userid} - adds a description to the assigned user. Can be done by any user.
+* PUT /todos/todoid/{todoid} - updates a description based on todoid. Can be done by any user.
 * DELETE /users/userid/{userid} - Deletes a user based off of their userid and deletes all their associated todos. Can only be done by an admin.
 
 * hint - think about taking the project https://github.com/LambdaSchool/java-oauth2.git and modifying it to fit this application
@@ -74,11 +74,11 @@ Add appropriate exception handling especially
 Add logging for
 * Tomcat 
 * Root
-* Specific application logging whenever a todo is added. Include the text of the todo, the time and date it is added and its id number.
+* Specific application logging whenever a description is added. Include the text of the description, the time and date it is added and its id number.
 * All logging can do to the console
 
 * Update the end points below:
-  * POST /users/todo/{userid} - adds a todo to the assigned user. Can only be done by the authenticated user. A user can only modify their own data.
-  * PUT /todos/todoid/{todoid} - updates a todo based on todoid. Can only be done by the authenticated user. A user can only modify their own data.
+  * POST /users/description/{userid} - adds a description to the assigned user. Can only be done by the authenticated user. A user can only modify their own data.
+  * PUT /todos/todoid/{todoid} - updates a description based on todoid. Can only be done by the authenticated user. A user can only modify their own data.
 * add appropriate end points to manage users giving only admin access to these.
 * Deploy to Heroku using H2
