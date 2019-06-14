@@ -61,7 +61,7 @@ Expose the following end points
 
 * hint - think about taking the project https://github.com/LambdaSchool/java-oauth2.git and modifying it to fit this application
   * StartHere is a base Java Spring Back end system still under development. However, it does contain what you need for today.
-  * authenticatedusers is a OAuth2 Java Spring application like we did during the guided projects but contains quotes in a many to one relationship with users.
+  * authenticatedusers is a OAuth2 Java Spring application like we did during the guided projects but contains todos in a many to one relationship with users.
 
 ## Stretch goals
 
