@@ -41,15 +41,21 @@ public class UserController
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getusername", produces = {"application/json"})
+    /*************************************************************************
+     * **** RETURN THE USER AND _TODO BASED OFF OF THE AUTHENTICATED USER ****
+     * ***********************************************************************/
+    @GetMapping(value = "/mine", produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<?> getCurrentUserName(Authentication authentication)
     {
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
+    /*************************************************************************
+     * **************************** ADDS A USER ******************************
+     * ***********************************************************************/
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PostMapping(value = "/user", consumes = {"application/json"}, produces = {"application/json"})
+    @PostMapping(value = "/users", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid @RequestBody User newuser) throws URISyntaxException
     {
         newuser = userService.save(newuser);
@@ -70,8 +76,11 @@ public class UserController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /*******************************************************************************************
+     * **** DELETES A USER BASED OFF OF THEIR USERID AND DELETES ALL THEIR ASSOCIATED TODOS ****
+     * *****************************************************************************************/
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/userid/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable long id)
     {
         userService.delete(id);

@@ -31,8 +31,8 @@ public class TodoController
     @GetMapping(value = "/todo/{todoId}", produces = {"application/json"})
     public ResponseEntity<?> getTodo(@PathVariable Long todoId)
     {
-        Todo q = todoService.findTodoById(todoId);
-        return new ResponseEntity<>(q, HttpStatus.OK);
+        Todo t = todoService.findTodoById(todoId);
+        return new ResponseEntity<>(t, HttpStatus.OK);
     }
 
     @GetMapping(value = "/username/{userName}", produces = {"application/json"})
@@ -53,6 +53,32 @@ public class TodoController
         responseHeaders.setLocation(newTodoURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    }
+
+    /*************************************************************************
+     * *************** ADDS A _TODO TO THE ASSIGNED USER *********************
+     * ***********************************************************************/
+    @PostMapping(value = "/todo/{userid}")
+    public ResponseEntity<?> addNewTodoToUser(@Valid @RequestBody Todo newTodo,@PathVariable long userid) throws URISyntaxException
+    {
+        newTodo = todoService.save(newTodo);
+
+        // set the location header for the newly created resource
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newTodoURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{todoid}").buildAndExpand(newTodo.getTodoid()).toUri();
+        responseHeaders.setLocation(newTodoURI);
+
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    }
+
+    /*************************************************************************
+     * **************** UPDATES A _TODO BASED ON TODOID **********************
+     * ***********************************************************************/
+    @PutMapping(value = "/todoid/{todoid}")
+    public ResponseEntity<?> updateUser(@RequestBody Todo receivedTodo, @PathVariable long todoid)
+    {
+        Todo updatedTodo = todoService.update(receivedTodo, todoid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/todo/{id}")

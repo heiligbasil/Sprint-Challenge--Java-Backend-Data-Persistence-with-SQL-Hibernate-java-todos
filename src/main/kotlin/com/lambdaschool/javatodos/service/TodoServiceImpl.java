@@ -1,6 +1,7 @@
 package com.lambdaschool.javatodos.service;
 
 import com.lambdaschool.javatodos.model.Todo;
+import com.lambdaschool.javatodos.model.User;
 import com.lambdaschool.javatodos.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -64,7 +65,52 @@ public class TodoServiceImpl implements TodoService
         List<Todo> list = new ArrayList<>();
         todorepos.findAll().iterator().forEachRemaining(list::add);
 
-        list.removeIf(q -> !q.getUser().getUsername().equalsIgnoreCase(username));
+        list.removeIf(t -> !t.getUser().getUsername().equalsIgnoreCase(username));
         return list;
+    }
+
+
+    @Transactional
+    @Override
+    public Todo update(Todo receivedTodo, long todoid)
+    {
+        Todo existingTodo = todorepos.findById(todoid).orElseThrow(() -> new EntityNotFoundException("Todo " + todoid + " was not found!"));
+
+        if (receivedTodo.getDescription() != null)
+        {
+            existingTodo.setDescription(receivedTodo.getDescription());
+        }
+
+        if (receivedTodo.getDatestarted() != null)
+        {
+            existingTodo.setDatestarted(receivedTodo.getDatestarted());
+        }
+
+        if (receivedTodo.isCompleted())
+        {
+            existingTodo.setCompleted(receivedTodo.isCompleted());
+        }
+
+        if (receivedTodo.getUser() != null)
+        {
+            User userToUpdate = receivedTodo.getUser();
+
+            if (userToUpdate.getUsername() != null)
+            {
+                existingTodo.getUser().setUsername(userToUpdate.getUsername());
+            }
+
+            if (userToUpdate.getPassword() != null)
+            {
+                existingTodo.getUser().setPasswordNoEncrypt(userToUpdate.getPassword());
+            }
+
+            if (userToUpdate.getUserRoles().size() > 0)
+            {
+                existingTodo.getUser().setUserRoles(userToUpdate.getUserRoles());
+            }
+        }
+
+        return todorepos.save(existingTodo);
     }
 }

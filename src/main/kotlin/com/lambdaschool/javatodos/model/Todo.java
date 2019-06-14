@@ -21,8 +21,7 @@ public class Todo extends Auditable
     private boolean completed;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid",
-                nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
     @JsonIgnoreProperties({"todos", "hibernateLazyInitializer"})
     private User user;
 
