@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter
 {
-
     private static final String RESOURCE_ID = "resource_id";
 
     @Override
@@ -24,20 +23,30 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception
     {
         // http.anonymous().disable();
-        http.authorizeRequests()
-            .antMatchers("/",                     // h2
-                                   "/h2-console/**",          // h2
-                                   "/v2/api-docs",            // swagger
-                                   "/swagger-resources",      // swagger
-                                   "/swagger-resources/**",   // swagger
-                                   "/configuration/ui",       // swagger
-                                   "/configuration/security", // swagger
-                                   "/swagger-ui.html",        // swagger
-                                   "/webjars/**"              // swagger
-                        ).permitAll()
+        http.authorizeRequests().antMatchers(
+                "/",                     // h2
+                            "/h2-console/**",          // h2
+                            "/v2/api-docs",            // swagger
+                            "/swagger-resources",      // swagger
+                            "/swagger-resources/**",   // swagger
+                            "/configuration/ui",       // swagger
+                            "/configuration/security", // swagger
+                            "/swagger-ui.html",        // swagger
+                            "/webjars/**",             // swagger
+                            "/error",                  // general web
+                            "/favicon.ico",            // general web
+                            "/**/*.png",               // general web
+                            "/**/*.gif",               // general web
+                            "/**/*.svg",               // general web
+                            "/**/*.jpg",               // general web
+                            "/**/*.html",              // general web
+                            "/**/*.css",               // general web
+                            "/**/*.js"                 // general web
+        ).permitAll()
                 .antMatchers("/users/**", "/todos/**").authenticated()
                 .antMatchers("/roles", "/actuator/**").hasAnyRole("ADMIN")
-            .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+                .and()
+                .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 
         // http.requiresChannel().anyRequest().requiresSecure();
         http.csrf().disable();

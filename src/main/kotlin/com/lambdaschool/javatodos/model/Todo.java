@@ -58,14 +58,14 @@ public class Todo extends Auditable
         this.description = description;
     }
 
-    public Timestamp getDatestarted()
+    public String getDatestarted()
     {
-        return datestarted;
+        return datestarted.toString();
     }
 
-    public void setDatestarted(Timestamp datestarted)
+    public void setDatestarted(String datestarted)
     {
-        this.datestarted = datestarted;
+        this.datestarted = Timestamp.valueOf(datestarted);
     }
 
     public boolean isCompleted()
